@@ -1,0 +1,17 @@
+package com.example.api.service;
+
+import com.example.api.dto.LoginDto;
+import com.example.api.model.entity.Admin;
+
+
+public interface AdminService {
+    Admin save(Admin admin) throws Exception;
+    Admin findById(String id);
+    Admin loginByEmailAndPassword(LoginDto dto) throws Exception;
+    Admin loginByEmailAndCode(LoginDto dto) throws Exception;
+    String createToken(Admin admin, boolean isRemember);
+    void deleteById(String id);
+    void sendEmail(String email) throws Exception;
+    boolean existsAdminByEmail(String email);
+    boolean existsAdminByRoles(String roles);
+}
