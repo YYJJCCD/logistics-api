@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -47,5 +48,23 @@ public class AdminController {
     @PostMapping("/basics/sendEmail")
     public void sendEmil(@RequestBody EmailDto dto) throws Exception{
         adminService.sendEmail(dto.getEmail());
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/findAll")
+    public List<Admin> findAll(){
+        return adminService.findAll();
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+    @DeleteMapping("/deleteById")
+    public void deleteById(String id){
+        adminService.deleteById(id);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+    @PostMapping("/save")
+    public Admin save(@RequestBody Admin admin) throws Exception{
+        return adminService.save(admin);
     }
 }

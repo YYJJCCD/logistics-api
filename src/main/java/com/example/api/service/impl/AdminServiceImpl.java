@@ -11,6 +11,7 @@ import com.example.api.utils.JwtUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -31,10 +32,11 @@ public class AdminServiceImpl implements AdminService {
     public Admin save(Admin admin) throws Exception {
         String email = admin.getEmail();
         String password = admin.getPassword();
+        if(existsAdminByEmail(email)) throw new Exception("邮箱已存在");
         if (!CheckUtil.checkEmail(email)) throw new Exception("邮箱格式错误");
         if (!CheckUtil.checkPassword(password)) throw new Exception("密码格式错误");
-        adminRepository.save(admin);
-        return null;
+        admin.setCreateAt(String.valueOf(System.currentTimeMillis()));
+        return adminRepository.save(admin);
     }
 
     @Override
@@ -57,6 +59,11 @@ public class AdminServiceImpl implements AdminService {
             return adminRepository.findAdminByEmail(dto.getEmail());
         }
         throw new Exception("验证码过期或错误");
+    }
+
+    @Override
+    public List<Admin> findAll() {
+        return adminRepository.findAll();
     }
 
     @Override
