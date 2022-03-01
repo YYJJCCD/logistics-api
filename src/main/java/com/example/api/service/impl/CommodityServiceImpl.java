@@ -5,7 +5,9 @@ import com.example.api.repository.CommodityRepository;
 import com.example.api.service.CommodityService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import javax.management.Query;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,7 +23,7 @@ public class CommodityServiceImpl implements CommodityService {
      */
     @Override
     public List<Commodity> findLikeByName(String name) {
-        return commodityRepository.findCommoditiesByName("%" + name + "%");
+        return commodityRepository.findCommoditiesByNameLike("%" + name + "%");
     }
 
     /**
@@ -39,8 +41,13 @@ public class CommodityServiceImpl implements CommodityService {
      * @param commodity 商品信息
      */
     @Override
-    public void save(Commodity commodity) {
-        commodityRepository.save(commodity);
+    public Commodity save(Commodity commodity) throws Exception{
+        if(commodityRepository.existsByName(commodity.getName())) throw new Exception("存在重复商品");
+        if(commodity.getCount() < 0) throw new Exception("商品数量不能小于0");
+        String nowTime = String.valueOf(System.currentTimeMillis());
+        commodity.setCreateAt(nowTime);
+        commodity.setUpdateAt(nowTime);
+        return commodityRepository.save(commodity);
     }
 
     /**
@@ -52,6 +59,11 @@ public class CommodityServiceImpl implements CommodityService {
         commodityRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteByName(String name) {
+        commodityRepository.deleteByName(name);
+    }
+
     /**
      * 获取所有的商品列表
      * @return 所有的商品
@@ -59,5 +71,24 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public List<Commodity> findAll() {
         return commodityRepository.findAll();
+    }
+
+    @Override
+    public Commodity useCommodity(int value, String id) throws Exception {
+        String updateAt = String.valueOf(System.currentTimeMillis());
+        Commodity commodity = commodityRepository.findById(id).orElse(null);
+        if(commodity == null) throw new Exception("商品不存在");
+        if(value > commodity.getCount()) throw new Exception("商品不足");
+        commodity.setUpdateAt(updateAt);
+        commodity.setCount(commodity.getCount() - value);
+        return commodityRepository.save(commodity);
+    }
+
+    @Override
+    public Commodity update(Commodity commodity) throws Exception {
+        if(!commodityRepository.existsByName(commodity.getName())) throw new Exception("修改的商品不存在");
+        if(commodity.getCount() < 0) throw new Exception("商品数量不能小于0");
+        commodity.setUpdateAt(String.valueOf(System.currentTimeMillis()));
+        return commodityRepository.save(commodity);
     }
 }
