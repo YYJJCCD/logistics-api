@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         //判断JWT Token是否过期
         if (JwtUtil.isExpiration(token)) {
-            ResponseUtil.writeJson(response, new ResponseResult<>(403, "令牌已过期, 请重新登录"));
+            ResponseUtil.writeJson(response, new ResponseResult<>(401, "令牌已过期, 请重新登录"));
             return;
         }
 

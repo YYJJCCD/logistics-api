@@ -22,6 +22,13 @@ public class AdminController {
     @Resource
     private AdminService adminService;
 
+    @GetMapping("/checkToken")
+    public Map<String, Object> checkToken(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", "token正确");
+        return map;
+    }
+
     @GetMapping("/basics/hasInit")
     public boolean hasInit() {
         return adminService.existsAdminByRoles(Role.ROLE_SUPER_ADMIN.getValue());
@@ -57,9 +64,10 @@ public class AdminController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
-    @DeleteMapping("/deleteById")
-    public void deleteById(String id){
-        adminService.deleteById(id);
+    @DeleteMapping("/deleteByUid")
+    public void deleteByUid(String uid){
+        System.out.println(uid);
+        adminService.deleteByUid(uid);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")

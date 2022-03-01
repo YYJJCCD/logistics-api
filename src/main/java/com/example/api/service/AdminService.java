@@ -13,7 +13,7 @@ public interface AdminService {
     Admin loginByEmailAndCode(LoginDto dto) throws Exception;
     List<Admin> findAll();
     String createToken(Admin admin, boolean isRemember);
-    void deleteById(String id);
+    void deleteByUid(String uid);
     void sendEmail(String email) throws Exception;
     boolean existsAdminByEmail(String email);
     boolean existsAdminByRoles(String roles);
