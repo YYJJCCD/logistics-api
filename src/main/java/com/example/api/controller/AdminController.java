@@ -66,7 +66,6 @@ public class AdminController {
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @DeleteMapping("/deleteByUid")
     public void deleteByUid(String uid){
-        System.out.println(uid);
         adminService.deleteByUid(uid);
     }
 

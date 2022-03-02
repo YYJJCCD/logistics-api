@@ -18,7 +18,7 @@ public enum Role {
 
     ROLE_SALE("ROLE_SALE", "销售相关权限"),
 
-    ROLE_WAREHOUSE("ROLE_WAREHOUSE", "仓库相关权限");
+    ROLE_STORAGE("ROLE_STORAGE", "仓库相关权限");
 
     private final String value;
 
@@ -29,7 +29,7 @@ public enum Role {
             ROLE_COMMODITY,
             ROLE_EMPLOYEE,
             ROLE_SALE,
-            ROLE_WAREHOUSE
+            ROLE_STORAGE
     };
 
     Role(String value, String description) {

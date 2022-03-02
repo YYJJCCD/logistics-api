@@ -31,8 +31,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String requestURI = request.getRequestURI();
         //Token为空放行
         //如果接下来进入的URL不是公共的地址SpringSecurity会返回403的错误
-        if (!JwtUtil.checkToken(token) || requestURI.startsWith("/api/admin/basics")){
+        if(requestURI.startsWith("/api/admin/basics")){
             chain.doFilter(request, response);
+            return;
+        }
+
+        if (!JwtUtil.checkToken(token)){
+            ResponseUtil.writeJson(response, new ResponseResult<>(401, "令牌错误"));
             return;
         }
 

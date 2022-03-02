@@ -47,7 +47,6 @@ public class CommodityController {
 
     @DeleteMapping("/deleteByName")
     public void deleteByName(String name){
-        System.out.println(name);
         commodityService.deleteByName(name);
     }
 }

@@ -6,6 +6,7 @@ import com.example.api.service.CommodityService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.management.Query;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +45,10 @@ public class CommodityServiceImpl implements CommodityService {
     public Commodity save(Commodity commodity) throws Exception{
         if(commodityRepository.existsByName(commodity.getName())) throw new Exception("存在重复商品");
         if(commodity.getCount() < 0) throw new Exception("商品数量不能小于0");
-        String nowTime = String.valueOf(System.currentTimeMillis());
-        commodity.setCreateAt(nowTime);
-        commodity.setUpdateAt(nowTime);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strTime =  df.format(System.currentTimeMillis());
+        commodity.setCreateAt(strTime);
+        commodity.setUpdateAt(strTime);
         return commodityRepository.save(commodity);
     }
 
@@ -88,7 +90,9 @@ public class CommodityServiceImpl implements CommodityService {
     public Commodity update(Commodity commodity) throws Exception {
         if(!commodityRepository.existsByName(commodity.getName())) throw new Exception("修改的商品不存在");
         if(commodity.getCount() < 0) throw new Exception("商品数量不能小于0");
-        commodity.setUpdateAt(String.valueOf(System.currentTimeMillis()));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strTime =  df.format(System.currentTimeMillis());
+        commodity.setUpdateAt(strTime);
         return commodityRepository.save(commodity);
     }
 }
