@@ -4,9 +4,7 @@ import com.example.api.dto.EmailDto;
 import com.example.api.dto.LoginDto;
 import com.example.api.model.entity.Admin;
 import com.example.api.model.enums.Role;
-import com.example.api.repository.AdminRepository;
 import com.example.api.service.AdminService;
-import com.example.api.utils.JwtUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +21,7 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping("/checkToken")
-    public Map<String, Object> checkToken(){
+    public Map<String, Object> checkToken() {
         Map<String, Object> map = new HashMap<>();
         map.put("msg", "token正确");
         return map;
@@ -53,25 +51,25 @@ public class AdminController {
     }
 
     @PostMapping("/basics/sendEmail")
-    public void sendEmil(@RequestBody EmailDto dto) throws Exception{
+    public void sendEmil(@RequestBody EmailDto dto) throws Exception {
         adminService.sendEmail(dto.getEmail());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/findAll")
-    public List<Admin> findAll(){
+    public List<Admin> findAll() {
         return adminService.findAll();
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @DeleteMapping("/deleteByUid")
-    public void deleteByUid(String uid){
+    public void deleteByUid(String uid) {
         adminService.deleteByUid(uid);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/save")
-    public Admin save(@RequestBody Admin admin) throws Exception{
+    public Admin save(@RequestBody Admin admin) throws Exception {
         return adminService.save(admin);
     }
 }

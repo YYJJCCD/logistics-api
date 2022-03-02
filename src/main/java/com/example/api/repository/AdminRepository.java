@@ -8,9 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, String> {
     boolean existsAdminByEmail(String email);
+
     boolean existsAdminByRoles(String roles);
+
     Admin findAdminByEmailAndPassword(String email, String password);
+
     Admin findAdminByEmail(String email);
+
     @Transactional
     void deleteByUid(String uid);
 }
