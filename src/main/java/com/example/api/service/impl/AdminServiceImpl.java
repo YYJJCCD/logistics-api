@@ -1,9 +1,8 @@
 package com.example.api.service.impl;
 
-import com.example.api.dto.LoginDto;
+import com.example.api.model.dto.LoginDto;
 import com.example.api.model.entity.Admin;
 import com.example.api.repository.AdminRepository;
-import com.example.api.repository.CodeRepository;
 import com.example.api.service.AdminService;
 import com.example.api.service.EmailService;
 import com.example.api.utils.CheckUtil;

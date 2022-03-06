@@ -1,6 +1,6 @@
 package com.example.api.service;
 
-import com.example.api.dto.LoginDto;
+import com.example.api.model.dto.LoginDto;
 import com.example.api.model.entity.Admin;
 
 import java.util.List;

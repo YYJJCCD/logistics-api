@@ -1,7 +1,7 @@
 package com.example.api.controller;
 
-import com.example.api.dto.EmailDto;
-import com.example.api.dto.LoginDto;
+import com.example.api.model.dto.EmailDto;
+import com.example.api.model.dto.LoginDto;
 import com.example.api.model.entity.Admin;
 import com.example.api.model.enums.Role;
 import com.example.api.service.AdminService;
